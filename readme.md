@@ -12,8 +12,8 @@ This project is a Node.js script designed to create mass accounts on a target si
 
 1. **Clone the repository**:
     ```sh
-    git clone https://github.com/yourusername/Reffer_HAck.git
-    cd Reffer_HAck
+    git clone https://github.com/tas33n/REFER_HACK.git
+    cd REFER_HACK
     ```
 
 2. **Install dependencies**:

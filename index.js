@@ -1,12 +1,30 @@
+/**
+ * Reffer Hack
+ * Author: Tas33n
+ * Repository: https://github.com/tas33n/REFER_HACK.git
+ * Copyright (c) 2024 Your Name
+ *
+ * This script automates account registration by extracting a CSRF token and cookies
+ * from the registration page, then submitting a registration form using random user data.
+ * Successful registrations are logged and stored in a file.
+ */
+
+
 const axios = require('axios');
 const cheerio = require('cheerio');
 const fs = require('fs').promises;
 const chalk = require('chalk');
 
+// your config here
+const refferral_id = "00000000"; // Replace with your refferral ID
+const limit = 100; // Adjust the limit as needed
+
+
+// Main task starts here, dont edit below this line
 const namesFile = 'names.txt';
 const accountsFile = 'accounts.txt';
 const baseURL = 'https://link-monetize.com';
-const registerURL = `${baseURL}/register?ref=449380541`;
+const registerURL = `${baseURL}/register?ref=${refferral_id}`;
 let userAgents = [];
 (async () => {
     userAgents = (await fs.readFile('user-agents.txt', 'utf-8')).split('\n').map(ua => ua.trim()).filter(Boolean);
@@ -83,7 +101,7 @@ const run = async () => {
     let successCount = 0;
     let failureCount = 0;
 
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < limit; i++) {
         const randomIndex = Math.floor(Math.random() * nameList.length);
         const fullName = nameList[randomIndex];
         const [firstName, ...lastNameParts] = fullName.split(' ');

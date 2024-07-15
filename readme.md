@@ -24,6 +24,7 @@ This project is a Node.js script designed to create mass accounts on a target si
 ## Usage
 
 1. **Prepare your name list**:
+    - Put your reffer code in src/index.js line 19
     - Create a file named `names.txt` in the root directory.
     - Add names in the format `FirstName LastName` (one per line).
 
@@ -33,7 +34,11 @@ This project is a Node.js script designed to create mass accounts on a target si
 
 3. **Run the script**:
     ```sh
-    node index.js
+    <!-- to run mass account creation -->
+    npm start
+
+    <!-- to run auto task -->
+    npm run task
     ```
 
 ## Output

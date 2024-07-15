@@ -2,7 +2,7 @@
  * Reffer Hack
  * Author: Tas33n
  * Repository: https://github.com/tas33n/REFER_HACK.git
- * Copyright (c) 2024 Your Name
+ * Copyright (c) 2024 tas33n
  *
  * This script automates account registration by extracting a CSRF token and cookies
  * from the registration page, then submitting a registration form using random user data.
@@ -16,7 +16,7 @@ const fs = require('fs').promises;
 const chalk = require('chalk');
 
 // your config here
-const refferral_id = "00000000"; // Replace with your refferral ID
+const refferral_id = "449380541"; // Replace with your refferral ID
 const limit = 100; // Adjust the limit as needed
 
 

@@ -83,24 +83,26 @@ const run = async () => {
     let successCount = 0;
     let failureCount = 0;
 
-    for (const [index, fullName] of nameList.entries()) {
+    for (let i = 0; i < 1000; i++) {
+        const randomIndex = Math.floor(Math.random() * nameList.length);
+        const fullName = nameList[randomIndex];
         const [firstName, ...lastNameParts] = fullName.split(' ');
         const lastName = lastNameParts.join(' ');
-        const email = `${firstName.toLowerCase()}${lastName.toLowerCase()}${Math.floor(Math.random() * 1000)}@gmail.com`;
+        const email = `${firstName.toLowerCase().replace(/\s+/g, '')}${lastName.toLowerCase().replace(/\s+/g, '')}${Math.floor(Math.random() * 1000)}@gmail.com`;
         const password = generateStrongPassword();
 
         try {
             const isSuccess = await registerAccount(firstName, lastName, email, password);
             if (isSuccess) {
                 successCount++;
-                console.log(chalk.green(`(${index + 1}/${nameList.length}) Success => ${email} : ${password}`));
+                console.log(chalk.green(`(${i + 1}/${nameList.length}) Success => ${email} : ${password}`));
             } else {
                 failureCount++;
-                console.log(chalk.red(`(${index + 1}/${nameList.length}) Failed => ${email} : ${password}`));
+                console.log(chalk.red(`(${i + 1}/${nameList.length}) Failed => ${email} : ${password}`));
             }
         } catch (error) {
             failureCount++;
-            console.log(chalk.red(`(${index + 1}/${nameList.length}) Error ${email} : ${password} `, error));
+            console.log(chalk.red(`(${i + 1}/${nameList.length}) Error ${email} : ${password} `, error));
         }
 
         // wait for next account creation

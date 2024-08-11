@@ -23,9 +23,12 @@ const rl = readline.createInterface({
 
 // Ask for referral ID
 rl.question('Please enter your referral ID: ', (refferral_id) => {
+    console.log(`Referral ID entered: ${refferral_id}`); // Debug log
+
     // Ask for limit
     rl.question('Please enter the limit (default is 100): ', (limitInput) => {
         const limit = limitInput ? parseInt(limitInput, 10) : 100;
+        // console.log(`Limit entered: ${limit}`); // Debug log
 
         // Main task starts here, dont edit below this line
         const namesFile = 'names.txt';
@@ -34,20 +37,25 @@ rl.question('Please enter your referral ID: ', (refferral_id) => {
         const registerURL = `${baseURL}/register?ref=${refferral_id}`;
         let userAgents = [];
         (async () => {
+            // console.log('Reading user agents file...'); // Debug log
             userAgents = (await fs.readFile('user-agents.txt', 'utf-8')).split('\n').map(ua => ua.trim()).filter(Boolean);
+            // console.log('User agents loaded.'); // Debug log
         })();
 
         const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
         const getTokenAndCookies = async () => {
+            // console.log('Fetching token and cookies...'); // Debug log
             const response = await axios.get(registerURL);
             const $ = cheerio.load(response.data);
             const token = $('input[name="_token"]').val();
             const cookies = response.headers['set-cookie'].map(cookie => cookie.split(';')[0]).join('; ');
+            // console.log('Token and cookies fetched.'); // Debug log
             return { token, cookies };
         };
 
         const registerAccount = async (firstName, lastName, email, password) => {
+            // console.log(`Registering account for ${email}...`); // Debug log
             const { token, cookies } = await getTokenAndCookies();
             const userAgent = userAgents[Math.floor(Math.random() * userAgents.length)];
 
@@ -84,9 +92,11 @@ rl.question('Please enter your referral ID: ', (refferral_id) => {
             });
 
             if (response.status === 200) {
+                // console.log(`Account registered: ${email}`); // Debug log
                 await fs.appendFile(accountsFile, `${email}:${password}\n`);
                 return true;
             } else {
+                // console.log(`Failed to register account: ${email}`); // Debug log
                 return false;
             }
         };
@@ -102,8 +112,10 @@ rl.question('Please enter your referral ID: ', (refferral_id) => {
         };
 
         const run = async () => {
+            // console.log('Reading names file...'); // Debug log
             const names = await fs.readFile(namesFile, 'utf-8');
             const nameList = names.split('\n').map(name => name.trim()).filter(Boolean);
+            // console.log('Names loaded.'); // Debug log
 
             let successCount = 0;
             let failureCount = 0;
